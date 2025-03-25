@@ -60,7 +60,7 @@ export default function CreatePromptPage() {
   const fetchHistory = async (page = 1) => {
     try {
       setIsHistoryLoading(true)
-      const response = await fetch(`/api/prompts?page=${page}&limit=${historyPagination.limit}`)
+      const response = await fetch(`/api/prompts?status=private&page=${page}&limit=${historyPagination.limit}`)
 
       if (!response.ok) {
         throw new Error("Failed to fetch history")

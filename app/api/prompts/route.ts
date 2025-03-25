@@ -27,7 +27,6 @@ export async function GET(req: NextRequest) {
       const clientId = await getOrCreateClientId()
       baseQuery = baseQuery
         .eq("client_id", clientId)
-        .eq("status", "private")
     }
 
     // Execute query with pagination
