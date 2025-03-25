@@ -1,0 +1,110 @@
+{
+  "models": [
+    {
+      "id": "o1",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "name": "o1",
+      "multiModal": true
+    },
+    {
+      "id": "o1-mini",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "name": "o1 mini",
+      "multiModal": false
+    },
+    {
+      "id": "o3-mini",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "name": "o3 mini",
+      "multiModal": false
+    },
+    {
+      "id": "gpt-4.5-preview",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "name": "GPT-4.5",
+      "multiModal": true
+    },
+    {
+      "id": "gpt-4o",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "name": "GPT-4o",
+      "multiModal": true
+    },
+    {
+      "id": "gpt-4o-mini",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "name": "GPT-4o Mini",
+      "multiModal": true
+    },
+    {
+      "id": "gpt-4-turbo",
+      "provider": "OpenAI",
+      "providerId": "openai",
+      "name": "GPT-4 Turbo",
+      "multiModal": true
+    },
+    {
+      "id": "claude-3-7-sonnet-latest",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "name": "Claude 3.7 Sonnet",
+      "multiModal": true
+    },
+    {
+      "id": "claude-3-5-sonnet-latest",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "name": "Claude 3.5 Sonnet",
+      "multiModal": true
+    },
+    {
+      "id": "claude-3-5-haiku-latest",
+      "provider": "Anthropic",
+      "providerId": "anthropic",
+      "name": "Claude 3.5 Haiku",
+      "multiModal": true
+    },
+    {
+      "id": "models/gemini-1.5-pro-002",
+      "provider": "Google Generative AI",
+      "providerId": "google",
+      "name": "Gemini 1.5 Pro",
+      "multiModal": true
+    },
+    {
+      "id": "models/gemini-2.0-flash-exp",
+      "provider": "Google Generative AI",
+      "providerId": "google",
+      "name": "Gemini 2.0 Flash",
+      "multiModal": true
+    },
+    {
+      "id": "models/gemini-1.5-flash-002",
+      "provider": "Google Generative AI",
+      "providerId": "google",
+      "name": "Gemini 1.5 Flash",
+      "multiModal": true
+    },
+    {
+      "id": "mistral-large-latest",
+      "provider": "Mistral",
+      "providerId": "mistral",
+      "name": "Mistral Large",
+      "multiModal": false
+    },
+    {
+      "id": "mistral-small-latest",
+      "provider": "Mistral",
+      "providerId": "mistral",
+      "name": "Mistral Small",
+      "multiModal": false
+    }
+  ]
+}
+
