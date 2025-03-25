@@ -6,7 +6,7 @@ export default function PrivacyPage() {
       <div className="prose dark:prose-invert max-w-none">
         <p>
           Chính sách bảo mật này mô tả cách chúng tôi thu thập, sử dụng và chia sẻ thông tin cá nhân của bạn khi bạn sử
-          dụng dịch vụ PromptMaster AI của chúng tôi.
+          dụng dịch vụ Tạo Prompt AI của chúng tôi.
         </p>
 
         <h2>1. Thông tin chúng tôi thu thập</h2>

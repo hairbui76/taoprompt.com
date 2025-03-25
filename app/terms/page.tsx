@@ -5,7 +5,7 @@ export default function TermsPage() {
 
       <div className="prose dark:prose-invert max-w-none">
         <p>
-          Chào mừng bạn đến với PromptMaster AI. Bằng cách truy cập và sử dụng dịch vụ của chúng tôi, bạn đồng ý tuân
+          Chào mừng bạn đến với Tạo Prompt AI. Bằng cách truy cập và sử dụng dịch vụ của chúng tôi, bạn đồng ý tuân
           thủ và chịu ràng buộc bởi các điều khoản và điều kiện sau đây.
         </p>
 

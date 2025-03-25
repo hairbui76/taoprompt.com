@@ -19,7 +19,7 @@ export function Footer() {
               © 2025 TaoPrompt.com
             </p>
             <Link
-              href="https://github.com/yourusername/promptmaster"
+              href="https://github.com/bombap/taoprompt.com"
               target="_blank"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >

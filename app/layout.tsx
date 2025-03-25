@@ -10,7 +10,7 @@ import { Footer } from "@/components/footer"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "PromptMaster AI",
+  title: "Tạo Prompt AI",
   description: "Công cụ tạo Prompt chuyên nghiệp tích hợp AI",
   generator: 'v0.dev'
 }

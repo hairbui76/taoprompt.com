@@ -214,6 +214,22 @@ export default function CreatePromptPage() {
   // Handle toggle public/private
   const handleToggleStatus = async (id: string, currentStatus: "public" | "private") => {
     try {
+      // Nếu đang chuyển từ private sang public, kiểm tra prompt trước
+      if (currentStatus === "private") {
+        // Tìm prompt trong history
+        const prompt = history.find(p => p.id === id)
+
+        // Kiểm tra nếu không có final_prompt
+        if (!prompt?.final_prompt?.trim()) {
+          toast({
+            title: "Không thể công khai",
+            description: "Prompt này không có nội dung hoàn chỉnh",
+            variant: "destructive",
+          })
+          return
+        }
+      }
+
       const newStatus = currentStatus === "public" ? "private" : "public"
 
       const response = await fetch("/api/prompts", {
@@ -368,20 +384,22 @@ export default function CreatePromptPage() {
                                       <Badge variant={item.status === "public" ? "default" : "outline"}>
                                         {item.status === "public" ? "Công khai" : "Riêng tư"}
                                       </Badge>
-                                      <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-6 w-6"
-                                        onClick={(e) => {
-                                          handleToggleStatus(item.id, item.status)
-                                        }}
-                                      >
-                                        {item.status === "public" ? (
-                                          <Lock className="h-3 w-3" />
-                                        ) : (
-                                          <Globe className="h-3 w-3" />
-                                        )}
-                                      </Button>
+                                      {item.final_prompt?.trim() && (
+                                        <Button
+                                          variant="ghost"
+                                          size="icon"
+                                          className="h-6 w-6"
+                                          onClick={(e) => {
+                                            handleToggleStatus(item.id, item.status)
+                                          }}
+                                        >
+                                          {item.status === "public" ? (
+                                            <Lock className="h-3 w-3" />
+                                          ) : (
+                                            <Globe className="h-3 w-3" />
+                                          )}
+                                        </Button>
+                                      )}
                                     </div>
                                   </div>
                                 </div>
