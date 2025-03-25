@@ -75,17 +75,79 @@ npm run dev
 
 5. Mở [http://localhost:3000](http://localhost:3000) trên trình duyệt.
 
-## 📦 Cấu trúc dự án
+## 📦 Cấu trúc và Luồng xử lý
 
-\`\`\`
+### 🔄 Luồng tạo Prompt
+
+```mermaid
+graph TD;
+A[Người dùng nhập yêu cầu] --> B[Phân tích yêu cầu - prompt_1.md];
+B --> C{Kết quả phân tích};
+C --> D[Tạo prompt chuyên nghiệp - prompt_2.md];
+D --> E[Lưu final prompt + analysis];
+E --> F{Chế độ auto version?};
+F -- Có --> G[Tạo thêm 2-5 phiên bản];
+F -- Không --> H[Lưu 1 phiên bản];
+H --> I[Hiển thị cho người dùng];
+```
+
+### 📂 Cấu trúc thư mục
+
+```
 promptmaster/
 ├── app/                    # Next.js app router
-├── components/             # React components
-├── lib/                    # Utilities và helpers
-│   └── prompts/           # Prompt templates
-├── types/                  # TypeScript types
-└── public/                # Static files
-\`\`\`
+│   ├── page.tsx           # Trang chủ
+│   ├── create/            # Trang tạo prompt
+│   ├── history/          # Trang lịch sử
+│   └── library/          # Thư viện prompt
+├── components/            # React components
+│   ├── prompt-form/      # Form nhập yêu cầu
+│   ├── analysis/         # Hiển thị phân tích
+│   └── prompt-display/   # Hiển thị kết quả
+├── lib/                  # Utilities và helpers
+│   ├── prompts/         # Prompt templates
+│   │   ├── prompt_1.md  # Template phân tích
+│   │   └── prompt_2.md  # Template tạo prompt
+│   └── db/              # Database utilities
+└── types/               # TypeScript types
+    └── models.ts       # Model definitions
+```
+
+### 🗃 Cấu trúc Database
+
+#### Bảng `Prompts`
+| Field | Loại | Mô tả |
+|-------|------|-------|
+| id | UUID | Primary key |
+| client_id | string | ID browser |
+| user_request | text | Yêu cầu gốc |
+| analysis_result | text/jsonb | Kết quả phân tích |
+| final_prompt | text | Prompt chính |
+| model_used | string | Model AI sử dụng |
+| auto_version | boolean | Chế độ tạo hàng loạt |
+| status | enum | private/public |
+| created_at | timestamp | Thời gian tạo |
+
+#### Bảng `PromptVersions`
+| Field | Loại | Mô tả |
+|-------|------|-------|
+| id | UUID | Primary key |
+| prompt_id | UUID | FK to Prompts |
+| version_number | int | Số phiên bản |
+| final_prompt | text | Nội dung prompt |
+| notes | text | Ghi chú |
+| model_used | string | Model AI sử dụng |
+
+### 🔌 API Endpoints
+
+| Route | Method | Mô tả |
+|-------|--------|-------|
+| `/api/analyze` | POST | Phân tích yêu cầu |
+| `/api/generate` | POST | Tạo prompt |
+| `/api/version` | POST | Tạo phiên bản mới |
+| `/api/prompts` | GET | Lấy lịch sử prompt |
+| `/api/publish` | POST | Công khai prompt |
+| `/api/public-prompts` | GET | Lấy thư viện prompt |
 
 ## 🤝 Đóng góp
 
