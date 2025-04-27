@@ -46,7 +46,6 @@ export default function CreatePromptPage() {
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [result, setResult] = useState("");
 	const [showModelAlert, setShowModelAlert] = useState(false);
-	const [isAnalysisExpanded, setIsAnalysisExpanded] = useState(true);
 	const [finalPrompt, setFinalPrompt] = useState("");
 	const [activeTab, setActiveTab] = useState<"thinking" | "prompt">("thinking");
 	const [charCount, setCharCount] = useState(0);
@@ -71,7 +70,7 @@ export default function CreatePromptPage() {
 		try {
 			setIsHistoryLoading(true);
 			const response = await fetch(
-				`/api/prompts?status=private&page=${page}&limit=${historyPagination.limit}`
+				`/api/prompts?page=${page}&limit=${historyPagination.limit}`
 			);
 
 			if (response.status === 403) {

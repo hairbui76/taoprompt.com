@@ -59,7 +59,6 @@
 		"next": "15.1.0",
 		"next-auth": "^4.24.11",
 		"next-themes": "latest",
-		"posthog-js": "^1.232.6",
 		"react": "^19",
 		"react-day-picker": "^9.6.7",
 		"react-dom": "^19",

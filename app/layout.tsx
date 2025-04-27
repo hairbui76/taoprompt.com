@@ -7,7 +7,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type React from "react";
 import "./globals.css";
-import { PostHogProvider } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,20 +25,18 @@ export default function RootLayout({
 		<html lang="vi" suppressHydrationWarning>
 			<body className={inter.className}>
 				<AuthProvider>
-					<PostHogProvider>
-						<ThemeProvider
-							attribute="class"
-							defaultTheme="system"
-							enableSystem
-							disableTransitionOnChange>
-							<div className="flex min-h-screen flex-col">
-								<Header />
-								<main className="flex-1">{children}</main>
-								<Footer />
-							</div>
-							<Toaster />
-						</ThemeProvider>
-					</PostHogProvider>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange>
+						<div className="flex min-h-screen flex-col">
+							<Header />
+							<main className="flex-1">{children}</main>
+							<Footer />
+						</div>
+						<Toaster />
+					</ThemeProvider>
 				</AuthProvider>
 			</body>
 		</html>

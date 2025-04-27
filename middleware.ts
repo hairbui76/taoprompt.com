@@ -5,17 +5,17 @@ import { getToken } from "next-auth/jwt";
 const protectedRoutes = ["/create", "/api/prompts"];
 
 // Get allowed usernames from environment variable or use defaults
-const getAllowedUsernames = (): string[] => {
-	const envUsernames = process.env.ALLOWED_USERNAMES;
-	if (envUsernames) {
-		return envUsernames.split(",").map((username) => username.trim());
+const getAllowedEmails = (): string[] => {
+	const envAllowedEmails = process.env.ALLOWED_EMAILS;
+	if (envAllowedEmails) {
+		const allowedEmails = envAllowedEmails.split("|");
+		return allowedEmails.map((email) => email.trim());
 	}
-	// Default usernames if not specified in environment
-	return ["MrYasuo", "hairbui76"];
+	return [];
 };
 
 // Get the list of allowed usernames
-const ALLOWED_USERNAMES = getAllowedUsernames();
+const ALLOWED_EMAILS = getAllowedEmails();
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
@@ -27,19 +27,20 @@ export async function middleware(request: NextRequest) {
 
 	if (isProtectedRoute) {
 		const token = await getToken({ req: request });
-		console.log(token);
 
 		// If not authenticated at all
 		if (!token)
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
 		// Check if user is in the allowed list
-		const username = token?.name as string | undefined;
-		if (!username || !ALLOWED_USERNAMES.includes(username)) {
+		const email = token?.email as string | undefined;
+		if (!email || !ALLOWED_EMAILS.includes(email)) {
 			// For API routes, return JSON
 			if (pathname.startsWith("/api/")) {
 				return NextResponse.json(
-					{ error: "Access denied. Your username is not authorized." },
+					{
+						error: "Access denied. You are not authorized to access this page.",
+					},
 					{ status: 403 }
 				);
 			}
