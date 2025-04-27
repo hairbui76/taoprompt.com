@@ -1,21 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { createClient } from "@supabase/supabase-js";
 
 // Define which routes require authentication
 const protectedRoutes = ["/create", "/api/prompts"];
 
-// Get allowed usernames from environment variable or use defaults
-const getAllowedEmails = (): string[] => {
-	const envAllowedEmails = process.env.ALLOWED_EMAILS;
-	if (envAllowedEmails) {
-		const allowedEmails = envAllowedEmails.split("|");
-		return allowedEmails.map((email) => email.trim());
-	}
-	return [];
-};
+// Define which routes require admin role
+const adminRoutes = ["/admin"];
 
-// Get the list of allowed usernames
-const ALLOWED_EMAILS = getAllowedEmails();
+// Create a Supabase client for middleware
+const createMiddlewareClient = (req: NextRequest) => {
+	const supabaseUrl = process.env.SUPABASE_URL!;
+	const supabaseKey = process.env.SUPABASE_ANON_KEY!;
+
+	// Create client
+	return createClient(supabaseUrl, supabaseKey, {
+		auth: {
+			persistSession: false,
+		},
+	});
+};
 
 export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
@@ -25,25 +29,77 @@ export async function middleware(request: NextRequest) {
 		pathname.startsWith(route)
 	);
 
-	if (isProtectedRoute) {
+	// Check if the route is admin-only
+	const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+
+	// If route requires authentication or admin access
+	if (isProtectedRoute || isAdminRoute) {
 		const token = await getToken({ req: request });
 
 		// If not authenticated at all
 		if (!token)
-			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+			return NextResponse.redirect(new URL("/auth/signin", request.url));
 
-		// Check if user is in the allowed list
-		const email = token?.email as string | undefined;
-		if (!email || !ALLOWED_EMAILS.includes(email)) {
+		const userId = token.sub;
+		const email = token.email as string | undefined;
+
+		if (!userId || !email) {
+			return NextResponse.redirect(new URL("/auth/signin", request.url));
+		}
+
+		// Check user permissions in database
+		const supabase = createMiddlewareClient(request);
+		const { data: userData, error } = await supabase
+			.from("users")
+			.select("status, role")
+			.eq("id", userId)
+			.single();
+
+		// Error checking the database
+		if (error) {
+			console.error("Database error in middleware:", error);
+
+			// For API routes, return JSON
+			if (pathname.startsWith("/api/")) {
+				return NextResponse.json(
+					{ error: "Server error checking permissions" },
+					{ status: 500 }
+				);
+			}
+
+			// For UI routes, redirect to error page
+			return NextResponse.redirect(new URL("/auth/error", request.url));
+		}
+
+		// User doesn't exist in our database or status is not verified
+		if (!userData || userData.status !== "verified") {
 			// For API routes, return JSON
 			if (pathname.startsWith("/api/")) {
 				return NextResponse.json(
 					{
-						error: "Access denied. You are not authorized to access this page.",
+						error:
+							"Your account is pending verification. Please wait for an admin to approve your account.",
 					},
 					{ status: 403 }
 				);
 			}
+
+			// For UI routes, redirect to access-denied page
+			return NextResponse.redirect(new URL("/auth/access-denied", request.url));
+		}
+
+		// If route requires admin role, check if user is admin
+		if (isAdminRoute && userData.role !== "admin") {
+			// For API routes, return JSON
+			if (pathname.startsWith("/api/")) {
+				return NextResponse.json(
+					{
+						error: "You don't have admin privileges to access this resource.",
+					},
+					{ status: 403 }
+				);
+			}
+
 			// For UI routes, redirect to access-denied page
 			return NextResponse.redirect(new URL("/auth/access-denied", request.url));
 		}

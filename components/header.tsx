@@ -13,6 +13,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { Brain, LogIn, LogOut, Plus, User } from "lucide-react";
 import Link from "next/link";
+import { AdminNav } from "./admin-nav";
 
 export function Header() {
 	const { isAuthenticated, user, signOut, isLoading } = useAuth();
@@ -24,7 +25,8 @@ export function Header() {
 					<Brain className="h-5 w-5 text-primary" />
 					<span className="text-lg font-semibold">Tạo Prompt AI</span>
 				</Link>
-				<div className="flex items-center gap-4">
+
+				<div className="flex items-center space-x-2">
 					{isAuthenticated && (
 						<Link href="/create">
 							<Button size="sm" className="h-8 gap-1.5">
@@ -33,6 +35,8 @@ export function Header() {
 							</Button>
 						</Link>
 					)}
+
+					<AdminNav />
 					<ThemeToggle />
 
 					{isLoading ? (

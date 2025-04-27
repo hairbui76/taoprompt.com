@@ -1,37 +1,55 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { AlertCircle } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { useAuth } from "@/hooks/useAuth";
+import { ArrowLeft, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 
 export default function AccessDenied() {
+	const { user, isAuthenticated, signOut } = useAuth();
+
 	return (
-		<div className="container flex items-center justify-center min-h-[60vh]">
-			<div className="w-full max-w-md p-8 space-y-6 bg-card rounded-lg shadow-lg">
+		<div className="container flex flex-col items-center justify-center min-h-[70vh] max-w-md mx-auto text-center">
+			<div className="p-6 space-y-6 bg-card rounded-lg shadow-lg">
 				<div className="flex justify-center">
-					<AlertCircle className="text-red-500 h-16 w-16" />
-				</div>
-				<div className="text-center space-y-3">
-					<h1 className="text-2xl font-bold">Truy cập bị từ chối</h1>
-					<p className="text-muted-foreground">
-						Rất tiếc, tài khoản của bạn không có quyền truy cập vào ứng dụng
-						này.
-					</p>
-					<p className="text-sm text-muted-foreground">
-						Chỉ những người dùng được cấp phép mới có thể sử dụng ứng dụng.
-					</p>
+					<ShieldAlert className="h-16 w-16 text-destructive" />
 				</div>
 
-				<div className="space-y-4">
-					<Button variant="outline" className="w-full" asChild>
-						<Link href="/">Trở về trang chủ</Link>
-					</Button>
-					<Button
-						variant="ghost"
-						className="w-full text-red-500 hover:text-red-600 hover:bg-red-100"
-						onClick={() => signOut({ callbackUrl: "/" })}>
-						Đăng xuất
+				<h1 className="text-2xl font-bold">Access Denied</h1>
+
+				{isAuthenticated ? (
+					<div className="space-y-4">
+						<p className="text-muted-foreground">
+							Your account status is pending verification. An administrator
+							needs to approve your account before you can access this resource.
+						</p>
+						<div className="space-y-2">
+							<p className="text-sm">
+								Signed in as:{" "}
+								<span className="font-semibold">{user?.email}</span>
+							</p>
+							<Button variant="outline" onClick={() => signOut()}>
+								Sign Out
+							</Button>
+						</div>
+					</div>
+				) : (
+					<div className="space-y-4">
+						<p className="text-muted-foreground">
+							You don't have permission to access this resource.
+						</p>
+						<Button asChild>
+							<Link href="/auth/signin">Sign In</Link>
+						</Button>
+					</div>
+				)}
+
+				<div className="pt-4 border-t">
+					<Button variant="ghost" asChild>
+						<Link href="/" className="flex items-center">
+							<ArrowLeft className="mr-2 h-4 w-4" />
+							Return to Home
+						</Link>
 					</Button>
 				</div>
 			</div>
