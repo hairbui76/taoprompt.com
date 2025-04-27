@@ -171,4 +171,4 @@ Dự án này được cấp phép theo giấy phép MIT - xem file [LICENSE](LI
 
 ## 🙏 Cảm ơn
 
-Cảm ơn bạn đã quan tâm đến Tạo Prompt AI! Chúng tôi hy vọng công cụ này sẽ giúp bạn tạo ra những prompt AI chuyên nghiệp và hiệu quả. 
+Cảm ơn bạn đã quan tâm đến Tạo Prompt AI! Chúng tôi hy vọng công cụ này sẽ giúp bạn tạo ra những prompt AI chuyên nghiệp và hiệu quả.
