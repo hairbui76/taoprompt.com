@@ -33,7 +33,7 @@ export default function Home() {
 		const fetchPrompts = async () => {
 			try {
 				setIsLoading(true);
-				const response = await fetch("/api/prompts");
+				const response = await fetch("/api/prompts?status=public");
 
 				if (response.status === 401) {
 					// Redirect to signin page if unauthorized

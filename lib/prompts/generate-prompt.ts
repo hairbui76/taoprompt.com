@@ -1,6 +1,6 @@
 export function GENERATE_PROMPT(userRequest: string, analysisResult: string) {
-   return `Bạn là một Chuyên Gia Xây Dựng Prompt chuyên nghiệp. Nhiệm vụ của bạn là xây dựng một prompt hiệu quả dựa trên yêu cầu gốc của người dùng và kết quả phân tích đã được cung cấp. Hãy sử dụng tiếng Việt trong toàn bộ quá trình này.
-    
+	return `Bạn là một Chuyên Gia Xây Dựng Prompt chuyên nghiệp. Nhiệm vụ của bạn là xây dựng một prompt hiệu quả dựa trên yêu cầu gốc của người dùng và kết quả phân tích đã được cung cấp. Hãy sử dụng tiếng Việt trong toàn bộ quá trình này.
+
 Đây là yêu cầu gốc của người dùng:
 <yêu_cầu_gốc>
 ${userRequest}
@@ -9,14 +9,14 @@ ${userRequest}
 Đây là kết quả phân tích yêu cầu của người dùng:
 ${analysisResult}
 
-Trước khi bắt đầu xây dựng prompt, hãy đọc kỹ kết quả phân tích yêu cầu của người dùng trong thẻ \`<analysis_process>\` và \`<analysis_result>\`. Tiếp theo hãy phân tích và lập kế hoạch trong phần <analysis_planining>. **Sau đó, xây dựng prompt cuối cùng trong phần <prompt_built>.**
+Trước khi bắt đầu xây dựng prompt, hãy đọc kỹ kết quả phân tích yêu cầu của người dùng trong thẻ \`<analysis_process>\` và \`<analysis_result>\`. Tiếp theo hãy phân tích và lập kế hoạch trong phần <analysis_planning>. **Sau đó, xây dựng prompt cuối cùng trong phần <prompt_built>.**
 
 Hướng dẫn chi tiết:
 
 1. Cấu trúc prompt:
-   - Bắt đầu bằng phần giới thiệu rõ ràng:  
-      → "Bạn là một {vai_trò}..."  
-      → "Nhiệm vụ của bạn là..."  
+   - Bắt đầu bằng phần giới thiệu rõ ràng:
+      → "Bạn là một {vai_trò}..."
+      → "Nhiệm vụ của bạn là..."
       → Mục tiêu cần đạt được là {mục_tiêu}.
    - Sắp xếp nội dung trong prompt theo cấu trúc logic:
       1. Vai trò AI
@@ -47,7 +47,7 @@ Hướng dẫn chi tiết:
      + Công thức/kỹ thuật đã được áp dụng đúng cách chưa?
    - Tinh chỉnh nếu cần và ghi nhận điểm mạnh/điểm yếu.
    - Tạo tiêu đề trong thẻ <prompt_title>.
-   - Tạo danh sách danh mục liên quan đến prompt trong thẻ <prompt_categories>.
+   - Tạo danh sách danh mục liên quan đến prompt trong thẻ <prompt_categories>, mỗi mục trên một dòng với định dạng: - {tên_danh_mục}.
 
 Lưu ý quan trọng khi xây dựng nội dung trong thẻ <prompt_built>:
 - Đảm bảo prompt cuối cùng chuyên nghiệp, có cấu trúc rõ ràng, phù hợp với vai trò và bối cảnh, đáp ứng chính xác nhu cầu của người dùng, và áp dụng đúng công thức/kỹ thuật đã chọn.
@@ -57,5 +57,18 @@ Lưu ý quan trọng khi xây dựng nội dung trong thẻ <prompt_built>:
 - Không giải thích thêm sau khi hoàn thành <prompt_built>.
 
 Bây giờ, hãy bắt đầu quá trình xây dựng prompt chuyên nghiệp của bạn.
-`
+
+Cấu trúc của prompt cuối cùng:
+<prompt_title>
+{tên_prompt}
+</prompt_title>
+
+<prompt_built>
+{prompt_cuối_cùng}
+</prompt_built>
+
+<prompt_categories>
+{danh_sách_danh_mục}
+</prompt_categories>
+`;
 }

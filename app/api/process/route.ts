@@ -172,6 +172,7 @@ export async function POST(req: NextRequest) {
 
 				await writer.close();
 
+				console.log("analysisResult", analysisResult);
 				// Extract finalPrompt, promptTitle and categories from analysisResult
 				finalPrompt = extractContent(analysisResult, "prompt_built");
 				promptTitle = extractContent(analysisResult, "prompt_title");
